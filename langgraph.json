@@ -1,0 +1,9 @@
+{
+  "$schema": "https://langgra.ph/schema.json",
+  "python_version": "3.12",
+  "dependencies": ["."],
+  "graphs": {
+    "agent": "./src/langgraph_demo/agents/simple_agent.py:graph"
+  },
+  "env": ".env"
+}

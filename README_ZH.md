@@ -18,7 +18,7 @@
 ├── langgraph.json
 ├── pyproject.toml
 ├── src/
-│   └── langgraph_demo/
+│   └── app/
 │       ├── agents/
 │       │   └── simple_agent.py
 │       ├── middleware/
@@ -28,9 +28,9 @@
 └── uv.lock
 ```
 
-- `src/langgraph_demo/agents/simple_agent.py`：定义 LangGraph agent、模型节点、工具节点和图编译入口。
-- `src/langgraph_demo/tools/stub.py`：定义当前绑定到 agent 的 stub 工具。
-- `src/langgraph_demo/middleware/prompts.py`：定义当前 agent 的系统提示词注入逻辑。
+- `src/app/agents/simple_agent.py`：定义 LangGraph agent、模型节点、工具节点和图编译入口。
+- `src/app/tools/stub.py`：定义当前绑定到 agent 的 stub 工具。
+- `src/app/middleware/prompts.py`：定义当前 agent 的系统提示词注入逻辑。
 - `langgraph.json`：LangGraph CLI / Studio 使用的项目配置，暴露的 graph 名称是 `agent`。
 - `.env.example`：环境变量模板，包含 OpenAI 和 LangSmith 相关配置。
 
@@ -56,9 +56,9 @@ LANGSMITH_API_KEY=your-langsmith-api-key-here
 LANGSMITH_PROJECT=langgraph-demo
 LANGSMITH_ENDPOINT=https://api.smith.langchain.com
 
-OPENAI_MODEL=gpt-4.1-mini
+OPENAI_MODEL=glm-5.1
 OPENAI_API_KEY=your-api-key-here
-OPENAI_BASE_URL=
+OPENAI_BASE_URL=https://open.bigmodel.cn/api/coding/paas/v4
 ```
 
 如果暂时不需要 LangSmith 追踪，可以把 `LANGSMITH_TRACING` 改为 `false`。
@@ -79,7 +79,7 @@ uv run langgraph dev
 ```json
 {
   "graphs": {
-    "agent": "./src/langgraph_demo/agents/simple_agent.py:graph"
+    "agent": "./src/app/agents/simple_agent.py:graph"
   }
 }
 ```
@@ -90,12 +90,12 @@ agent 会调用 OpenAI chat model，并在模型发起工具调用时进入 `Too
 Stub result for '<query>'. Replace lookup_stub with real tool logic.
 ```
 
-后续可以直接替换 `src/langgraph_demo/tools/stub.py` 中的 stub 实现，或添加更多 `@tool` 函数后放入 `tools` 包导出的 `tools` 列表。
+后续可以直接替换 `src/app/tools/stub.py` 中的 stub 实现，或添加更多 `@tool` 函数后放入 `app.tools` 包导出的 `tools` 列表。
 
 ## 快速验证
 
 ```bash
 uv run python -m compileall src
-uv run python -c "from langgraph_demo.agents.simple_agent import graph; print(sorted(graph.nodes.keys()))"
-uv run python -c "from langgraph_demo.tools import lookup_stub; print(lookup_stub.invoke({'query': 'demo'}))"
+uv run python -c "from app.agents.simple_agent import graph; print(sorted(graph.nodes.keys()))"
+uv run python -c "from app.tools import lookup_stub; print(lookup_stub.invoke({'query': 'demo'}))"
 ```

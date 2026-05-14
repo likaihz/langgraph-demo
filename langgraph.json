@@ -3,7 +3,7 @@
   "python_version": "3.12",
   "dependencies": ["."],
   "graphs": {
-    "agent": "./src/langgraph_demo/agents/simple_agent.py:graph"
+    "agent": "./src/app/agents/simple_agent.py:graph"
   },
   "env": ".env"
 }

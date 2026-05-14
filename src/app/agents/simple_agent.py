@@ -5,8 +5,8 @@ from langchain_openai import ChatOpenAI
 from langgraph.graph import END, START, MessagesState, StateGraph
 from langgraph.prebuilt import ToolNode
 
-from langgraph_demo.middleware.prompts import with_system_prompt
-from langgraph_demo.tools import tools
+from app.middleware.prompts import with_system_prompt
+from app.tools import tools
 
 
 model = ChatOpenAI(

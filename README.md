@@ -19,7 +19,7 @@ The graph is exposed as `agent` in `langgraph.json`.
 Main package layout:
 
 ```text
-src/langgraph_demo/
+src/app/
 ├── agents/
 ├── middleware/
 └── tools/
